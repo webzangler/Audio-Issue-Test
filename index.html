@@ -1,0 +1,57 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Testing Audio</title>
+    </head>
+    <body>
+        <audio
+            src=""
+            id="aud"
+            onloadedmetadata="mDur()"
+            ontimeupdate="mPlay()"
+            loop
+        ></audio>
+        <input
+            type="range"
+            id="sbar"
+            min="0"
+            step="0.25"
+            value="0"
+            onchange="mSet()"
+            width="250"
+        />
+        <button id="play" onclick="toggleMusic()">Play</button>
+        <script>
+            var aud = document.getElementById("aud");
+            var dur = document.getElementById("sbar");
+            var btn = document.getElementById("play");
+            aud.hasSource = false;
+
+            function mDur() {
+                dur.max = aud.duration;
+                aud.hasSource = true;
+            }
+            function mPlay() {
+                dur.value = aud.currentTime;
+            }
+            function mSet() {
+                aud.currentTime = dur.value;
+            }
+            function toggleMusic() {
+                if (!aud.hasSource) {
+                    aud.src = "hey anagha.mpeg";
+                    aud.load();
+                }
+                if (aud.paused) {
+                    aud.play();
+                    btn.innerText = "Pause";
+                } else {
+                    aud.pause();
+                    btn.innerText = "Play";
+                }
+            }
+        </script>
+    </body>
+</html>
